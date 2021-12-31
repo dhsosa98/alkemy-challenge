@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/alkemy-challenge/static/css/main.df364371.chunk.css",
-    "main.js": "/alkemy-challenge/static/js/main.c8880e6a.chunk.js",
-    "main.js.map": "/alkemy-challenge/static/js/main.c8880e6a.chunk.js.map",
+    "main.js": "/alkemy-challenge/static/js/main.7607035e.chunk.js",
+    "main.js.map": "/alkemy-challenge/static/js/main.7607035e.chunk.js.map",
     "runtime-main.js": "/alkemy-challenge/static/js/runtime-main.5b94b5b4.js",
     "runtime-main.js.map": "/alkemy-challenge/static/js/runtime-main.5b94b5b4.js.map",
     "static/js/2.471865a6.chunk.js": "/alkemy-challenge/static/js/2.471865a6.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.5b94b5b4.js",
     "static/js/2.471865a6.chunk.js",
     "static/css/main.df364371.chunk.css",
-    "static/js/main.c8880e6a.chunk.js"
+    "static/js/main.7607035e.chunk.js"
   ]
 }
