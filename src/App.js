@@ -1,29 +1,19 @@
-import { useContext } from 'react'
-import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
-import {AuthContext} from './AuthContext'
-import Layout from './components/Layout'
+import { BrowserRouter as Router, Switch} from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import ResetPass from './pages/Reset-pass'
+import PrivateRoute from './routes/PrivateRoute'
+import PublicRoute from './routes/PublicRoute'
 
 export default function App()  {
-    const {isAuth} = useContext(AuthContext)
     return (
         <Router>
             <Switch>
-            {!isAuth ?
-            <> 
-            <Route path="/" component={()=><Redirect to="/login"/>} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-            </>
-            :
-            <Layout>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/login" component={()=><Redirect to="/"/>} />
-                <Route exact path="/register" component={()=><Redirect to="/"/>} />
-            </Layout>}
-            
+                <PublicRoute exact path="/login" component={Login} />
+                <PublicRoute exact path="/register" component={Register} />
+                <PublicRoute exact path="/reset-password"  component={ResetPass} />
+                <PrivateRoute path="/" component={Home} />
             </Switch>     
         </Router>
     )   
