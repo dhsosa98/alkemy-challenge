@@ -1,7 +1,8 @@
 import { LockClosedIcon, CashIcon } from '@heroicons/react/solid'
 import { Link } from 'react-router-dom';
 
-const FormUserRegister = ( {onSubmit, handleUser, error} ) => {
+const FormUserRegister = ( {...props}) => {
+  const {onSubmit, handleChangeUser, error}  = props
     return (
         
     <>
@@ -26,7 +27,7 @@ const FormUserRegister = ( {onSubmit, handleUser, error} ) => {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Name"
-                  onChange={handleUser}
+                  onChange={handleChangeUser}
                 />
               </div>
               <div>
@@ -37,9 +38,9 @@ const FormUserRegister = ( {onSubmit, handleUser, error} ) => {
                   name="surname"
                   autoComplete="current-name"
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Surname"
-                  onChange={handleUser}
+                  onChange={handleChangeUser}
                 />
               </div>
               <div>
@@ -50,9 +51,9 @@ const FormUserRegister = ( {onSubmit, handleUser, error} ) => {
                   name="username"
                   autoComplete="current-username"
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Username"
-                  onChange={handleUser}
+                  onChange={handleChangeUser}
                 />
               </div>
               <div>
@@ -66,7 +67,7 @@ const FormUserRegister = ( {onSubmit, handleUser, error} ) => {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
-                  onChange={handleUser}
+                  onChange={handleChangeUser}
                 />
               </div>
             </div>
