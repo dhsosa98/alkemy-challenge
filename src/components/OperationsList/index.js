@@ -4,50 +4,69 @@ import Pagination from '../Pagination'
 import { SortAscendingIcon, SortDescendingIcon } from "@heroicons/react/solid"
 import ModalWindow from '../ModalWindow'
 import OperationItem from '../OperationItem'
+import { useHistory } from 'react-router-dom'
 
 
-const OperationsList = ({operationList, setOperationList, onDelete, onEdit}) => {
+const OperationsList = ({...props}) => {
+    const {operationList, onDelete, onEdit, cantOperations, page, size, isSort, setIsSort, querys} = props
+    const history = useHistory()
     const modalText = "Are you sure you want to delete this operation?"
-    const cantOperations = operationList.length
     const [deleteId, setDeleteId] = useState(null)
-    const [open, setOpen] = useState(false)
+    const [openDeleteModal, setOpenDeleteModal] = useState(false)
     const [toggleSortConcept, setToggleSortConcept] = useState(false)
+    const [toggleSortCategory, setToggleSortCategory] = useState(false)
     const [toggleSortAmount, setToggleSortAmount] = useState(false)
     const [toggleSortType, setToggleSortType] = useState(false)
     const [toggleSortDate, setToggleSortDate] = useState(false)
-    const limit = {
-      prev: 0,
-      next: 9 
-    }
-    const [pageLimit, setPageLimit] = useState(limit)
 
     const handleToggleSort = (e, toggleSort, setToggleSort) => {
-        let name = e.target.getAttribute("name")
-        console.log(name)
-        const operationSorted = operationList.sort((a,b)=>(a[name] > b[name] ? 1 : b[name] > a[name] ? -1 : 0))
-        console.log(operationSorted)
-        const operationSortedReverse = [...operationList].reverse()
-        console.log(operationSortedReverse)
+        e.preventDefault()
+        const name = e.currentTarget.getAttribute("name") || "concept"
+        let query = querys
+        let sortString = ''
+        toggleSort ? (sortString = name+"%ASC") : (sortString = name+"%DESC")
+        query.get("sort") 
+          ?
+          (
+          query.get("sort").includes(name) 
+          ?
+          query.set("sort", query.get("sort").split(name)[0] + sortString)
+          :
+          query.set("sort", query.get("sort") + "#" + sortString)
+          )
+          :
+          query.set("sort", sortString)
+        setIsSort(!isSort)
         setToggleSort(!toggleSort)
-        if (toggleSort){
-          setOperationList(operationSorted)
-          } 
-        else {
-          setOperationList(operationSortedReverse)
-          }
+        history.push("/?"+querys)
     }
 
     const handleDeleteOperation = () => {
-        console.log(deleteId)
         onDelete(deleteId)
         setDeleteId(null)
-        setOpen(false)
+        setOpenDeleteModal(false)
+    }
+
+    const handleResetSort = (e, setResetSort) => {
+      let name = e.currentTarget.getAttribute("name") || "concept"
+      let sort = querys.get("sort")
+      let regex = new RegExp(`#*${name}%ASC#*|#*${name}%DESC#*`, "i")      
+      !sort.split("#")[0].search(regex) 
+      || 
+      !sort.split("#")[sort.split("#").length-1].search(regex)   
+      ? 
+      (sort= sort.replace(regex, "")) 
+      :  
+      (sort= sort.replace(regex, "#")) 
+      querys.set("sort", sort)
+      !sort && querys.delete("sort")
+      setResetSort(false)
+      history.push("/?"+querys)
     }
 
     return (
-      
-        <div className="flex flex-col">
-          <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <>
+          <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 ">
             <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
               <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200 text-xs sm:text-lg table-auto">
@@ -55,9 +74,10 @@ const OperationsList = ({operationList, setOperationList, onDelete, onEdit}) => 
                     <tr>
                       <th
                         scope="col"
-                        className="px-6 py-3 text-left  text-white uppercase tracking-wider"
+                        className="px-3 sm:px-6 py-3 text-left  text-white uppercase tracking-wider"
                       >
-                        Concept
+                        <button name='concept' onClick={(e)=>{handleResetSort(e, setToggleSortConcept)}}>
+                        Concept</button>
                         {toggleSortConcept ? 
                         <SortAscendingIcon name="concept" className="h-6 sm:h-10 cursor-pointer" 
                         onClick={(e)=>{handleToggleSort(e, toggleSortConcept, setToggleSortConcept)}}/> 
@@ -67,9 +87,24 @@ const OperationsList = ({operationList, setOperationList, onDelete, onEdit}) => 
                       </th>
                       <th
                         scope="col"
-                        className="px-6 py-3 text-left text-white uppercase tracking-wider"
+                        className="px-3 sm:px-6 py-3 text-left text-white uppercase tracking-wider"
                       >
-                        Amount
+                        <button name='category' onClick={(e)=>{handleResetSort(e, setToggleSortCategory)}}>
+                          Category</button>
+                        {toggleSortCategory ? 
+                        <SortAscendingIcon name="category" className="h-6 sm:h-10 cursor-pointer" 
+                        onClick={(e)=>{handleToggleSort(e, toggleSortCategory, setToggleSortCategory)}}/> 
+                        : <SortDescendingIcon name="category" className="h-6 sm:h-10 cursor-pointer" 
+                        onClick={(e)=>{handleToggleSort(e, toggleSortCategory, setToggleSortCategory)}}/>
+                        }
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-3 sm:px-6 py-3 text-left text-white uppercase tracking-wider"
+                      > 
+                        
+                        <button name='amount' onClick={(e)=>{handleResetSort(e, setToggleSortAmount)}}>
+                        Amount</button>
                         {toggleSortAmount ? 
                         <SortAscendingIcon name="amount" className="h-6 sm:h-10 cursor-pointer" 
                         onClick={(e)=>{handleToggleSort(e, toggleSortAmount, setToggleSortAmount)}}/> 
@@ -79,9 +114,10 @@ const OperationsList = ({operationList, setOperationList, onDelete, onEdit}) => 
                       </th>
                       <th
                         scope="col"
-                        className="px-6 py-3 text-left text-white uppercase tracking-wider"
+                        className="px-3 sm:px-6 py-3 text-left text-white uppercase tracking-wider"
                       >
-                        Type
+                        <button name='type' onClick={(e)=>{handleResetSort(e, setToggleSortType)}}>
+                        Type</button>
                         {toggleSortType ? 
                         <SortAscendingIcon name="type" className=" h-6 sm:h-10 cursor-pointer" 
                         onClick={(e)=>{handleToggleSort(e, toggleSortType, setToggleSortType)}}/> 
@@ -91,9 +127,10 @@ const OperationsList = ({operationList, setOperationList, onDelete, onEdit}) => 
                       </th>
                       <th
                         scope="col"
-                        className="px-6 py-3 text-left text-white uppercase tracking-wider"
+                        className="px-3 sm:px-6 py-3 text-left text-white uppercase tracking-wider"
                       >
-                        Date
+                        <button name='date' onClick={(e)=>{handleResetSort(e, setToggleSortDate)}}>
+                        Date</button>
                         {toggleSortDate ? 
                         <SortAscendingIcon name="date" className=" h-6 sm:h-10 cursor-pointer" 
                         onClick={(e)=>{handleToggleSort(e, toggleSortDate, setToggleSortDate)}}/> 
@@ -101,22 +138,22 @@ const OperationsList = ({operationList, setOperationList, onDelete, onEdit}) => 
                         onClick={(e)=>{handleToggleSort(e, toggleSortDate, setToggleSortDate)}}/>
                         }
                       </th>
-                      <th scope="col" className="relative px-6 py-3">
+                      <th scope="col" className="relative px-3 sm:px-6 py-3">
                         <span className="sr-only">Delete</span>
                       </th>
-                      <th scope="col" className="relative px-6 py-3">
+                      <th scope="col" className="relative px-3 sm:px-6 py-3">
                         <span className="sr-only">Edit</span>
                       </th>
                     </tr>
                   </thead>
-                  <OperationItem operationList={operationList} onEdit={onEdit} setOpen={setOpen} setDeleteId={setDeleteId} pageLimit={pageLimit}  />
+                  <OperationItem operationList={operationList} onEdit={onEdit} setOpen={setOpenDeleteModal} setDeleteId={setDeleteId} />
                 </table>
               </div>
             </div>
           </div>
-          <Pagination pageLimit={pageLimit} setPageLimit={setPageLimit} cantOperations={cantOperations} />
-          <ModalWindow modalText={modalText} open={open} setOpen={setOpen} handleConfirm={handleDeleteOperation} type="delete"/>
-        </div>
+          <Pagination cantOperations={cantOperations} page={page} size={size} querys={querys} />
+          <ModalWindow modalText={modalText} open={openDeleteModal} setOpen={setOpenDeleteModal} handleConfirm={handleDeleteOperation} type="delete"/>
+        </>
       )
 
 }
