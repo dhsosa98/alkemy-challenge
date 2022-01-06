@@ -3,8 +3,8 @@ import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationIcon } from '@heroicons/react/outline'
 import { BadgeCheckIcon } from '@heroicons/react/solid'
 
-const ModalWindow = ({modalText, open, setOpen, handleConfirm, type}) => {
-
+const ModalWindow = ({...props}) => {
+const {modalText, open, setOpen, handleConfirm, type} = props
     const cancelButtonRef = useRef(null)
   
     return (
@@ -22,8 +22,6 @@ const ModalWindow = ({modalText, open, setOpen, handleConfirm, type}) => {
             >
               <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
             </Transition.Child>
-  
-            {/* This element is to trick the browser into centering the modal contents. */}
             <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
               &#8203;
             </span>
