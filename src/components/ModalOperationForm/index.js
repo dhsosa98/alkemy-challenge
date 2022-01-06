@@ -1,16 +1,16 @@
 import { Fragment, useRef} from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
-const ModalOperationForm = ({ newOperationItem, onSubmit, onChange, isEdit, setIsEdit, isOpen, setIsOpen}) => {
+const ModalOperationForm = ({...props}) => {
+    const { newOperationItem, onSubmit, onChange, isEdit, isOpen, setIsOpen} = props
     const cancelButtonRef = useRef(null)
     const handleCloseModal = () =>{
         setIsOpen(false)
-        setTimeout(()=>{setIsEdit(false)},200)
     }
     return (
         <Transition.Root show={isOpen} as={Fragment}>
         <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={()=>{}} >
-        <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-60 text-center sm:block sm:p-0">
+        <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-40 text-center sm:block sm:p-0">
         <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -32,9 +32,37 @@ const ModalOperationForm = ({ newOperationItem, onSubmit, onChange, isEdit, setI
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
         <form className="p-5 inline-flex flex-col align-bottom bg-indigo-600 rounded-lg text-left overflow-hidden shadow-xl sm:translate-y-40 transform transition-all sm:my-5 sm:max-w-lg sm:w-full" onSubmit={onSubmit}>
-            <h1 className='mx-auto mb-4 text-xl text-white'>{!isEdit ? <>{"Please insert a new Operation"}</> : <>{"Please update the Operation"}</>}</h1>
+            <h1 className='mx-auto mb-4 text-xl text-white'>
+                {!isEdit ? <>{"Please insert a new Operation"}</> : <>{"Please update the Operation"}</>}
+            </h1>
             <label className='text-white'>Concept: </label>
-            <input placeholder='Example: Youtube' className='mb-4 h-7 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-1 pr-12 sm:text-lg border-gray-300 rounded-md' name='concept' value={newOperationItem.concept} onChange={onChange} />
+            <input placeholder='Example: Youtube Premium' className='mb-4 h-7 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-1 pr-12 sm:text-lg border-gray-300 rounded-md' name='concept' value={newOperationItem.concept} onChange={onChange} />
+
+            <label className='text-white'>Category: </label>
+            {newOperationItem.type==="Income" ? 
+        <select className='mb-4 h-7 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-1 pr-12 sm:text-lg border-gray-300 rounded-md' value={newOperationItem.category} name='category' onChange={onChange}>
+                <option value="Crypto">Crypto</option>
+                <option value="Profit">Profit</option>
+                <option value="Inheritance">Inheritance</option>
+                <option value="Salary">Salary</option>
+                <option value="Sale">Sale</option>
+                <option value="Rental">Rental</option>
+                <option value="Transaction">Transaction</option>
+                <option value="Other">Other</option>
+        </select>
+            : 
+        <select className='mb-4 h-7 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-1 pr-12 sm:text-lg border-gray-300 rounded-md' value={newOperationItem.category} name='category' onChange={onChange}>
+            <option value="Crypto">Crypto</option>
+            <option value="Food">Food</option>
+            <option value="School">School</option>
+            <option value="University">University</option>
+            <option value="Internet">Internet</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Rental">Rental</option>
+            <option value="Transaction">Transaction</option>
+            <option value="Services">Services</option>
+            <option value="Other">Other</option>
+        </select>}
 
             <label className='text-white'>Amount: </label>
             <input className='mb-4 h-7 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-1 pr-12 sm:text-lg border-gray-300 rounded-md' type='number' name='amount' value={newOperationItem.amount} onChange={onChange} />
