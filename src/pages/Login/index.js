@@ -14,19 +14,22 @@ const {signin} = useContext(AuthContext)
 
     const handleLoginUser = async (e) => {
         try{
-        e.preventDefault() 
-        const user = {
-            username: username,
-            password: password
+            e.preventDefault() 
+            const user = {
+                username: username,
+                password: password
+            }
+            const {data} = await getUser(user)
+            if (data.token){    
+                signin(data)
+                history.push("/")
+            }
+            else{
+                setError(data.errors)
+            }
         }
-        const {data} = await getUser(user)
-        if (data.token){    
-            signin(data)
-            history.push("/")
-        }
-     }
         catch{
-            setError(true)
+            console.log("error")
         }  
     }
 

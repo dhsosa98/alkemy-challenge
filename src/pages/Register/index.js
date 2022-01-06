@@ -22,11 +22,14 @@ const [error, setError] = useState('')
 
 const handleRegisterUser = async (e) => {
     try{
-    e.preventDefault()
-    const {data} = await registerUser(user)
-    if (data){
-        setOpen(true) 
-    }
+        e.preventDefault()
+        const {data} = await registerUser(user)
+        if (!data.errors){    
+            setOpen(true) 
+        }
+        else{
+            setError(data.errors)
+        }
     }
     catch(error){
         setError("This username has been used")
@@ -46,7 +49,7 @@ const handleConfirm = () => {
 }
     return (
         <>
-        <FormUserRegister onSubmit={handleRegisterUser} handleUser={handleChangeUser} error={error}/>
+        <FormUserRegister onSubmit={handleRegisterUser} handleChangeUser={handleChangeUser} error={error}/>
         <ModalWindow modalText={modalText} open={open} setOpen={open} handleConfirm={handleConfirm} type="confirm"/>
         </>
     )
