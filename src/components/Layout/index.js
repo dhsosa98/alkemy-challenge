@@ -1,7 +1,7 @@
 import { AuthContext } from "../../AuthContext";
 import { useContext } from "react";
 import { Disclosure} from '@headlessui/react'
-import { MenuIcon, XIcon } from '@heroicons/react/outline'
+import { MenuIcon, UserCircleIcon, XIcon } from '@heroicons/react/outline'
 import { Link, useHistory } from "react-router-dom";
 import { CashIcon } from "@heroicons/react/solid";
 
@@ -81,10 +81,13 @@ const Layout = ({children}) => {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
+            <div className="flex flex-col w-auto justify-center my-2">
+                <UserCircleIcon className="h-11" />
+                <div className="mx-auto mb-2">{`${user.name} ${user.surname}`}</div>
+              </div>
               {navigation.map((item) => (
-                <Disclosure.Button
+                <Link
                   key={item.name}
-                  as="Link"
                   to={item.href}
                   className={classNames(
                     item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
@@ -93,7 +96,7 @@ const Layout = ({children}) => {
                   aria-current={item.current ? 'page' : undefined}
                 >
                   {item.name}
-                </Disclosure.Button>
+                </Link>
               ))}
             </div>
           </Disclosure.Panel>
