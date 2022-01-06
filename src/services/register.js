@@ -1,10 +1,15 @@
 import axios from "axios"
-
-const baseUrl = 'http://localhost:4000/users/'
+let APIURL
+    if (process.env.NODE_ENV === 'development') {
+        APIURL = 'http://localhost:4000'}
+    else{
+        APIURL = 'https://alkemy-back-challenge.herokuapp.com'
+}
+const baseURL = `${APIURL}/api/users/register`
 
 export const registerUser = async (user) => {
     try{
-    const {data} = await axios.post(baseUrl, user)
+    const {data} = await axios.post(baseURL, user)
     return data
     }
     catch(error){
