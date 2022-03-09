@@ -41,7 +41,7 @@ const FormUserLogin = () => {
   };
   return (
     <>
-      <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-full flex items-center justify-center py-5 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div className="text-center">
             <CashIcon className=" h-48 w-48 m-auto text-indigo-600" />
@@ -79,7 +79,7 @@ const FormUserLogin = () => {
                   placeholder="Password"
                   onChange={(e) => handleChangePassword(e)}
                 />
-                <div className="pt-1.5 px-3 absolute right-0 z-20">
+                <div className="px-3 absolute right-0 bottom-0 h-full grid items-center z-20">
                   {!showPass ? (
                     <EyeIcon
                       onClick={() => setShowPass(!showPass)}
