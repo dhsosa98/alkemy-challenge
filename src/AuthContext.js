@@ -4,13 +4,13 @@ import { useState, createContext } from 'react';
 const AuthContext = createContext();
 
 const ProvideAuth = ({children}) => {
-    const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
-    const [isAuth, setIsAuth] = useState(!!sessionStorage.getItem('token'))
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+    const [isAuth, setIsAuth] = useState(!!localStorage.getItem('token'))
   
     const signin = ({user, token}) => {
         setUser(user);
-        sessionStorage.setItem('token', "Bearer "+ token)
-        sessionStorage.setItem('user', JSON.stringify(user))
+        localStorage.setItem('token', "Bearer "+ token)
+        localStorage.setItem('user', JSON.stringify(user))
         setIsAuth(true)
       };
     
@@ -18,8 +18,8 @@ const ProvideAuth = ({children}) => {
     const signout = () => {
         setUser({});
         setIsAuth(false)
-        sessionStorage.removeItem("token")
-        sessionStorage.removeItem("user")
+        localStorage.removeItem("token")
+        localStorage.removeItem("user")
       };
     
   
