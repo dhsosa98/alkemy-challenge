@@ -26,6 +26,7 @@ export default function Home() {
   const [cantOperations, setCantOperations] = useState(0);
   const { querys } = useContext(QueriesContext);
   const [modalText, setModalText] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     operationService.getOperationList(querys).then((operations) => {
@@ -39,7 +40,9 @@ export default function Home() {
 
   const handleSubmitOperationItem = (e) => {
     e.preventDefault();
+    setIsSubmitting(true)
     operationService.submitOperationItem(isEdit, newOperationItem).then(() => {
+      setIsSubmitting(false)
       setIsLoadingOperation(!isLoadingOperation);
       setIsOpen(false);
       setNewOperationItem(newOperationInit);
@@ -107,6 +110,7 @@ export default function Home() {
         newOperationItem={newOperationItem}
         isEdit={isEdit}
         isOpen={isOpen}
+        isSubmitting={isSubmitting}
         handleCloseModal={handleCloseModal}
       />
       <ModalWindow

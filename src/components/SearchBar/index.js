@@ -51,7 +51,7 @@ const SearchBar = ({ ...props }) => {
             e.currentTarget.type = "date";
             e.currentTarget.focus();
           }}
-          className=" w-full sm:text-lg p-1 bg-white h-11 border-indigo-600 border-t-2 border-b-2 outline-none text-xs"
+          className=" w-full sm:text-lg p-1 bg-white h-11 border-indigo-600 sm:border-l-0 sm:border-r-0 border-2 sm:border-t-2 sm:border-b-2 outline-none text-xs"
           value={from}
           onChange={handleChangeSearchFrom}
         />

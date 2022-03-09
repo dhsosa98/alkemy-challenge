@@ -9,6 +9,7 @@ const ModalOperationForm = ({ ...props }) => {
     isEdit,
     isOpen,
     handleCloseModal,
+    isSubmitting
   } = props;
   const cancelButtonRef = useRef(null);
   return (
@@ -129,8 +130,9 @@ const ModalOperationForm = ({ ...props }) => {
                 <button
                   className={`w-20  ${
                     !isEdit ? "bg-green-500 hover:bg-green-600" : "bg-indigo-400 hover:bg-indigo-600"
-                  } rounded-md px-4 py-1 transform hover:scale-105 duration-300 ease-in-out`}
+                  } rounded-md px-4 py-1 transform hover:scale-105 duration-300 ease-in-out ${isSubmitting ? "cursor-not-allowed opacity-80" : " cursor-pointer"}`}
                   type="submit"
+                  disabled={isSubmitting}
                 >
                   {isEdit ? <>{"Update"}</> : <>{"Add"}</>}
                 </button>
