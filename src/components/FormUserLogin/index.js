@@ -7,8 +7,9 @@ import { getUser } from "../../services/login";
 
 const FormUserLogin = () => {
   const [showPass, setShowPass] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState(localStorage.getItem("username") || '');
+  const [password, setPassword] = useState(localStorage.getItem("password") || '');
+  const [rememberMe, setRememberMe] = useState(!!localStorage.getItem("password"));
   const [error, setError] = useState(false);
   const history = useHistory();
   const { signin } = useContext(AuthContext);
@@ -23,6 +24,14 @@ const FormUserLogin = () => {
       const { data } = await getUser(user);
       if (data.token) {
         signin(data);
+        if (rememberMe){
+          localStorage.setItem("username", username)
+          localStorage.setItem("password", password)
+        }
+        else{
+          localStorage.removeItem("username")
+          localStorage.removeItem("password")
+        }
         history.push("/");
       } else {
         setError(data.errors);
@@ -62,6 +71,7 @@ const FormUserLogin = () => {
                 <input
                   name="username"
                   autoComplete="current-username"
+                  value={username}
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Username"
@@ -74,12 +84,13 @@ const FormUserLogin = () => {
                   name="password"
                   type={!showPass ? "password" : "text"}
                   autoComplete="current-password"
+                  value={password}
                   required
                   className="appearance-none border border-gray-300 relative block w-full px-3 py-2 rounded-b-md  placeholder-gray-500 text-gray-900 focus:outline-none sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                   placeholder="Password"
                   onChange={(e) => handleChangePassword(e)}
                 />
-                <div className="px-3 absolute right-0 bottom-0 h-full grid items-center z-20">
+                <div className="px-3 absolute right-0 bottom-0 h-full grid items-center z-20 cursor-pointer">
                   {!showPass ? (
                     <EyeIcon
                       onClick={() => setShowPass(!showPass)}
@@ -100,8 +111,10 @@ const FormUserLogin = () => {
                 <input
                   id="remember-me"
                   name="remember-me"
+                  checked={rememberMe}
                   type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded cursor-pointer"
+                  onChange={()=>{setRememberMe(!rememberMe)}}
                 />
                 <label
                   htmlFor="remember-me"

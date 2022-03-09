@@ -6,7 +6,7 @@ const FormUserRegister = ( {...props}) => {
     return (
         
     <>
-      <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-full flex items-center justify-center py-5  px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div className='text-center'>
             <CashIcon className=" h-48 w-48 m-auto text-indigo-600"/>

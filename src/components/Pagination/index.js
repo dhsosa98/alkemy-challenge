@@ -70,7 +70,7 @@ const Pagination = ({...props}) => {
                 {pageLimit.prev > size &&
               <button
                 onClick={(e)=>handleNavigate(e, page-1)}
-                className="relative inline-flex items-center px-2 py-2 rounded-l-full border border-indigo-600 bg-white text-sm font-medium text-indigo-600 hover:bg-gray-50 transform hover:scale-105 duration-300 ease-in-out"
+                className="relative inline-flex items-center px-2 py-2 rounded-l-full border border-indigo-600 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transform hover:scale-105 duration-300 ease-in-out"
               >
                 <span className="sr-only">Previous</span>
                 <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
@@ -78,7 +78,7 @@ const Pagination = ({...props}) => {
               {pageLimit.next<cantOperations &&
               <button
                 onClick={(e)=>handleNavigate(e, page+1)}
-                className="relative inline-flex items-center px-2 py-2 rounded-r-full border border-indigo-600 bg-white text-sm font-medium text-indigo-600 hover:bg-gray-50 transform hover:scale-105 duration-300 ease-in-out"
+                className="relative inline-flex items-center px-2 py-2 rounded-r-full border border-indigo-600 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transform hover:scale-105 duration-300 ease-in-out"
               >
                 <span className="sr-only">Next</span>
                 <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
