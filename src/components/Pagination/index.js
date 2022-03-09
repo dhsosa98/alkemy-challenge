@@ -1,39 +1,33 @@
-import { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useContext, useEffect } from 'react'
 import { ChevronLeftIcon, ChevronRightIcon} from '@heroicons/react/solid'
+import { QueriesContext } from '../../QueriesContext'
 
 const Pagination = ({...props}) => {
-  const {page, size, cantOperations, querys} = props
-  console.log(Math.ceil(cantOperations / size)-1)
-  const history = useHistory()
+  const {cantOperations } = props
+
+  const {page, size, querys, setHistorySearchParams} = useContext(QueriesContext)
+  
   let pageLimit = { prev: ((page+1)*size-size)+1, next: (page+1)*size }
+ 
+
+  useEffect(() => {
+    if ((page)*(size) >= cantOperations){
+      const cant = Math.floor(cantOperations / size)-1
+      querys.set("page", cant>=0 ? cant : 0)
+      setHistorySearchParams(querys)
+    }
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [cantOperations, page, size])
     
-    useEffect(() => {
-        if (cantOperations % size === 0){
-            if (pageLimit.prev > 10){
-                querys.set("page", page-1)
-                history.push(`/?${querys.toString()}`)
-            }
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [cantOperations]) 
-
-    useEffect(() => {
-      querys.get("page") < 0 ? querys.set("page", 0) :
-      (querys.get("page")  > (Math.ceil(cantOperations / size)-1)) && cantOperations 
-      && querys.set("page", Math.ceil(cantOperations / size))
-      history.push(`/?${querys.toString()}`)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [querys]) 
-
     const handleNavigate = (e, pageLink) => {
       e.preventDefault()
       querys.set("page", pageLink)
-      history.push(`/?${querys.toString()}`)
+      setHistorySearchParams(querys)
     }
+    
     return (
         <>
-        <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+        <div className="px-4 py-3 my-3 flex items-center justify-between sm:px-6">
         {cantOperations>size &&
         <div className=" container relative sm:hidden">
             {pageLimit.prev > size &&
@@ -76,7 +70,7 @@ const Pagination = ({...props}) => {
                 {pageLimit.prev > size &&
               <button
                 onClick={(e)=>handleNavigate(e, page-1)}
-                className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-indigo-600 bg-white text-sm font-medium text-indigo-600 hover:bg-gray-50"
+                className="relative inline-flex items-center px-2 py-2 rounded-l-full border border-indigo-600 bg-white text-sm font-medium text-indigo-600 hover:bg-gray-50 transform hover:scale-105 duration-300 ease-in-out"
               >
                 <span className="sr-only">Previous</span>
                 <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
@@ -84,7 +78,7 @@ const Pagination = ({...props}) => {
               {pageLimit.next<cantOperations &&
               <button
                 onClick={(e)=>handleNavigate(e, page+1)}
-                className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-indigo-600 bg-white text-sm font-medium text-indigo-600 hover:bg-gray-50"
+                className="relative inline-flex items-center px-2 py-2 rounded-r-full border border-indigo-600 bg-white text-sm font-medium text-indigo-600 hover:bg-gray-50 transform hover:scale-105 duration-300 ease-in-out"
               >
                 <span className="sr-only">Next</span>
                 <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />

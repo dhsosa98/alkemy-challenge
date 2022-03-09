@@ -10,8 +10,8 @@ const BalanceBox = ({...props}) => {
             {" $"}{total}
             </strong>
         </h1>
-        <div className='mx-auto'>
-            <PlusCircleIcon className=' cursor-pointer h-10 text-indigo-600' onClick={handleOpenModal} />
+        <div className='mx-auto '>
+            <PlusCircleIcon className=' cursor-pointer h-12 text-indigo-600 hover:text-indigo-800 transform hover:scale-105 duration-300 ease-in-out' onClick={handleOpenModal} />
         </div>
     </div> 
     )
