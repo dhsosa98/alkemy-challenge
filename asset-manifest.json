@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/alkemy-challenge/static/css/main.eeab17ba.chunk.css",
-    "main.js": "/alkemy-challenge/static/js/main.25025c4f.chunk.js",
-    "main.js.map": "/alkemy-challenge/static/js/main.25025c4f.chunk.js.map",
+    "main.css": "/alkemy-challenge/static/css/main.1b5aacd1.chunk.css",
+    "main.js": "/alkemy-challenge/static/js/main.6c957d6b.chunk.js",
+    "main.js.map": "/alkemy-challenge/static/js/main.6c957d6b.chunk.js.map",
     "runtime-main.js": "/alkemy-challenge/static/js/runtime-main.5b94b5b4.js",
     "runtime-main.js.map": "/alkemy-challenge/static/js/runtime-main.5b94b5b4.js.map",
-    "static/js/2.79517008.chunk.js": "/alkemy-challenge/static/js/2.79517008.chunk.js",
-    "static/js/2.79517008.chunk.js.map": "/alkemy-challenge/static/js/2.79517008.chunk.js.map",
+    "static/js/2.4fbe6f76.chunk.js": "/alkemy-challenge/static/js/2.4fbe6f76.chunk.js",
+    "static/js/2.4fbe6f76.chunk.js.map": "/alkemy-challenge/static/js/2.4fbe6f76.chunk.js.map",
     "index.html": "/alkemy-challenge/index.html",
-    "static/css/main.eeab17ba.chunk.css.map": "/alkemy-challenge/static/css/main.eeab17ba.chunk.css.map",
-    "static/js/2.79517008.chunk.js.LICENSE.txt": "/alkemy-challenge/static/js/2.79517008.chunk.js.LICENSE.txt",
+    "static/css/main.1b5aacd1.chunk.css.map": "/alkemy-challenge/static/css/main.1b5aacd1.chunk.css.map",
+    "static/js/2.4fbe6f76.chunk.js.LICENSE.txt": "/alkemy-challenge/static/js/2.4fbe6f76.chunk.js.LICENSE.txt",
     "static/media/output-onlinepngtools (1).093152fd.png": "/alkemy-challenge/static/media/output-onlinepngtools (1).093152fd.png",
     "static/media/output-onlinepngtools.52ab1d1b.png": "/alkemy-challenge/static/media/output-onlinepngtools.52ab1d1b.png"
   },
   "entrypoints": [
     "static/js/runtime-main.5b94b5b4.js",
-    "static/js/2.79517008.chunk.js",
-    "static/css/main.eeab17ba.chunk.css",
-    "static/js/main.25025c4f.chunk.js"
+    "static/js/2.4fbe6f76.chunk.js",
+    "static/css/main.1b5aacd1.chunk.css",
+    "static/js/main.6c957d6b.chunk.js"
   ]
 }
